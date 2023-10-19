@@ -1,0 +1,153 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "white",
+  "padding": 5,
+  "width": 400,
+  "height": 200,
+  "title": {
+    "text": "Correlation between GDP per capita and homicide rates",
+    "frame": "group"
+  },
+  "style": "cell",
+  "data": [
+    {
+      "name": "source_1",
+      "url": "https://raw.githubusercontent.com/ianllow/FIT3179A2/main/gdp_per_capita.csv",
+      "format": {"type": "csv", "delimiter": ","}
+    },
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/ianllow/FIT3179A2/main/australia_homicide_incidents.csv",
+      "format": {"type": "csv", "delimiter": ","},
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "source_1",
+          "key": "Year",
+          "fields": ["Year"],
+          "values": ["GDP per Capita"]
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"Rate\"]) && isFinite(+datum[\"Rate\"]) && isValid(datum[\"GDP per Capita\"]) && isFinite(+datum[\"GDP per Capita\"]) && isValid(datum[\"Count\"]) && isFinite(+datum[\"Count\"])"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "marks",
+      "type": "symbol",
+      "style": ["circle"],
+      "from": {"data": "source_0"},
+      "encode": {
+        "update": {
+          "opacity": {"value": 0.7},
+          "fill": {"scale": "color", "field": "GDP per Capita"},
+          "tooltip": {
+            "signal": "{\"Year\": isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"], \"Rate\": format(datum[\"Rate\"], \"\"), \"Count\": format(datum[\"Count\"], \"\"), \"GDP per Capita ($)\": format(datum[\"GDP per Capita\"], \"\")}"
+          },
+          "ariaRoleDescription": {"value": "circle"},
+          "description": {
+            "signal": "\"Year: \" + (isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"]) + \"; Average Homicide Rate: \" + (format(datum[\"Rate\"], \"\")) + \"; GDP per Capita: \" + (format(datum[\"GDP per Capita\"], \"\")) + \"; Total Homicide Count: \" + (format(datum[\"Count\"], \"\")) + \"; Rate: \" + (format(datum[\"Rate\"], \"\")) + \"; Count: \" + (format(datum[\"Count\"], \"\")) + \"; GDP per Capita ($): \" + (format(datum[\"GDP per Capita\"], \"\"))"
+          },
+          "x": {"scale": "x", "field": "Year"},
+          "y": {"scale": "y", "field": "Rate"},
+          "size": {"scale": "size", "field": "Count"},
+          "shape": {"value": "circle"}
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "point",
+      "domain": {"data": "source_0", "field": "Year", "sort": true},
+      "range": [0, {"signal": "width"}],
+      "padding": 0.5
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "Rate"},
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "GDP per Capita"},
+      "range": "ramp",
+      "interpolate": "hcl",
+      "zero": false
+    },
+    {
+      "name": "size",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "Count"},
+      "range": [0, 361],
+      "zero": true
+    }
+  ],
+  "axes": [
+    {
+      "scale": "y",
+      "orient": "left",
+      "gridScale": "x",
+      "grid": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "Year",
+      "labelAlign": "right",
+      "labelAngle": 270,
+      "labelBaseline": "middle",
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Average Homicide Rate",
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "zindex": 0
+    }
+  ],
+  "legends": [
+    {
+      "title": "GDP per Capita",
+      "fill": "color",
+      "gradientLength": {"signal": "clamp(height, 64, 200)"},
+      "encode": {"gradient": {"update": {"opacity": {"value": 0.7}}}}
+    },
+    {
+      "title": "Total Homicide Count",
+      "size": "size",
+      "symbolType": "circle",
+      "encode": {
+        "symbols": {
+          "update": {
+            "fill": {"value": "black"},
+            "fillOpacity": {"value": 0.7},
+            "opacity": {"value": 0.7},
+            "stroke": {"value": "transparent"}
+          }
+        }
+      }
+    }
+  ],
+  "config": {}
+}
