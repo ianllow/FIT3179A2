@@ -18,14 +18,14 @@
         {
           "type": "stack",
           "groupby": ["Year"],
-          "field": "Homicide Count",
+          "field": "Count",
           "sort": {"field": ["State"], "order": ["descending"]},
-          "as": ["Homicide Count_start", "Homicide Count_end"],
+          "as": ["Count_start", "Count_end"],
           "offset": "zero"
         },
         {
           "type": "filter",
-          "expr": "isValid(datum[\"Homicide Count\"]) && isFinite(+datum[\"Homicide Count\"])"
+          "expr": "isValid(datum[\"Count\"]) && isFinite(+datum[\"Count\"])"
         }
       ]
     }
@@ -40,16 +40,16 @@
         "update": {
           "fill": {"scale": "color", "field": "State"},
           "tooltip": {
-            "signal": "{\"Year\": isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"], \"State\": isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"], \"Homicide Count\": format(datum[\"Homicide Count\"], \"\")}"
+            "signal": "{\"Year\": isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"], \"State\": isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"], \"Count\": format(datum[\"Count\"], \"\")}"
           },
           "ariaRoleDescription": {"value": "bar"},
           "description": {
-            "signal": "\"Year: \" + (isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"]) + \"; Total Homicides: \" + (format(datum[\"Homicide Count\"], \"\")) + \"; State: \" + (isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"]) + \"; Homicide Count: \" + (format(datum[\"Homicide Count\"], \"\"))"
+            "signal": "\"Year: \" + (isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"]) + \"; Total Homicides: \" + (format(datum[\"Count\"], \"\")) + \"; State: \" + (isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"]) + \"; Count: \" + (format(datum[\"Count\"], \"\"))"
           },
           "x": {"scale": "x", "field": "Year"},
           "width": {"signal": "max(0.25, bandwidth('x'))"},
-          "y": {"scale": "y", "field": "Homicide Count_end"},
-          "y2": {"scale": "y", "field": "Homicide Count_start"}
+          "y": {"scale": "y", "field": "Count_end"},
+          "y2": {"scale": "y", "field": "Count_start"}
         }
       }
     }
@@ -66,10 +66,7 @@
     {
       "name": "y",
       "type": "linear",
-      "domain": {
-        "data": "source_0",
-        "fields": ["Homicide Count_start", "Homicide Count_end"]
-      },
+      "domain": {"data": "source_0", "fields": ["Count_start", "Count_end"]},
       "range": [{"signal": "height"}, 0],
       "nice": true,
       "zero": true
