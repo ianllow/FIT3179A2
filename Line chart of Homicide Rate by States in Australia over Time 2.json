@@ -1,0 +1,134 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "white",
+  "padding": 5,
+  "width": 600,
+  "height": 400,
+  "title": {"text": "Homicide Rates by State Over Time", "frame": "group"},
+  "style": "cell",
+  "signals": [
+    {
+      "name": "hover",
+      "value": null,
+      "on": [
+        {"events": "@marks:mouseover", "update": "datum"},
+        {"events": "@marks:mouseout", "update": "null"}
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/ianllow/FIT3179A2/main/australia_homicide_count_by_state.csv",
+      "format": {"type": "csv", "delimiter": ","}
+    }
+  ],
+  "marks": [
+    {
+      "name": "pathgroup",
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "faceted_path_main",
+          "data": "source_0",
+          "groupby": ["State"]
+        }
+      },
+      "encode": {
+        "update": {
+          "width": {"field": {"group": "width"}},
+          "height": {"field": {"group": "height"}}
+        }
+      },
+      "marks": [
+        {
+          "name": "marks",
+          "type": "line",
+          "style": ["line"],
+          "sort": {"field": "datum[\"Year\"]"},
+          "from": {"data": "faceted_path_main"},
+          "encode": {
+            "update": {
+              "stroke": {"scale": "color", "field": "State"},
+              "strokeWidth": [
+                {"test": "datum === hover", "value": 3},
+                {"value": 1}
+              ],
+              "tooltip": {
+                "signal": "{\"Year\": isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"], \"State\": isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"], \"Rate\": format(datum[\"Rate\"], \"\")}"
+              },
+              "description": {
+                "signal": "\"Year: \" + (isValid(datum[\"Year\"]) ? datum[\"Year\"] : \"\"+datum[\"Year\"]) + \"; Total Homicides: \" + (format(datum[\"Rate\"], \"\")) + \"; State: \" + (isValid(datum[\"State\"]) ? datum[\"State\"] : \"\"+datum[\"State\"]) + \"; Rate: \" + (format(datum[\"Rate\"], \"\"))"
+              },
+              "x": {"scale": "x", "field": "Year"},
+              "y": {"scale": "y", "field": "Rate"},
+              "defined": {
+                "signal": "isValid(datum[\"Rate\"]) && isFinite(+datum[\"Rate\"])"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "point",
+      "domain": {"data": "source_0", "field": "Year", "sort": true},
+      "range": [0, {"signal": "width"}],
+      "padding": 0.5
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {"data": "source_0", "field": "Rate"},
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "source_0", "field": "State", "sort": true},
+      "range": {"scheme": "tableau10"}
+    }
+  ],
+  "axes": [
+    {
+      "scale": "y",
+      "orient": "left",
+      "gridScale": "x",
+      "grid": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "domain": false,
+      "labels": false,
+      "aria": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "Year",
+      "labelAlign": "right",
+      "labelAngle": 270,
+      "labelBaseline": "middle",
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "Total Homicides",
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "zindex": 0
+    }
+  ],
+  "legends": [{"title": "State", "stroke": "color", "symbolType": "stroke"}],
+  "config": {}
+}
