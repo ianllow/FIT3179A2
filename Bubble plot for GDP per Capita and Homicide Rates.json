@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "background": "white",
   "padding": 5,
-  "width": 800,
-  "height": 600,
+  "width": 600,
+  "height": 400,
   "title": {
     "text": "Correlation between GDP per capita and homicide rates",
     "frame": "group"
