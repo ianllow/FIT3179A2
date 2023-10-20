@@ -1,0 +1,158 @@
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>Homicide Analysis</title>
+        <!-- Vega-Lite and Vega-Embed Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+        <script src="FIT3179A2_vis.js"></script>
+
+        <!-- Pure.css -->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-oXXDs4lJWgq8NtO1EO6p/PT7Kg9DOaFfKVU8BgHMGCN4C2kY9KgAg1tF2J+06F5R" crossorigin="anonymous">
+
+        <!-- CSS file -->
+        <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+        <title>Homicide Analysis</title>
+    </head>
+    <body>
+        <div class="pure-g">
+            <!-- Header Section -->
+            <div class="pure-u-1">
+            <header>
+                <h1>Analyzing Intentional Homicide Rates Globally & in Australia</h1>
+                <p>The intentional homicide rate, a measure often used to gauge a nation's stability and safety, offers valuable insights into societal challenges and the effectiveness of law enforcement. Our dataset captures these rates from various countries over multiple years, revealing global trends, regional differences, and the influence of socio-economic factors.</p>
+                <p>Through this analysis, we aim to understand the worldwide landscape of intentional homicide rates, explore the correlation between economic indicators like GDP per capita and homicide rates, and focus on Australia's specific scenario. Hopefully this comprehensive exploration sheds light on the stories behind the statistics.</p>
+            </header>
+            </div>
+
+            <!-- Global Analysis Section -->
+            <div class="pure-u-1">
+            <section class="global-analysis">
+                <h2>Global Analysis</h2>
+
+                <!-- Choropleth Map -->
+                <div class="pure-u-1" id="choropleth"></div>
+
+                <!-- Analysis for choropleth map -->
+                <div class="pure-g">
+                    <div class="pure-u-1-2">
+                        <p>The choropleth map visualizes intentional homicide rates across different countries globally. Here's a detailed exploration of its findings:</p>
+                    </div>
+
+                    <!-- Detailed Analysis -->
+                    <div class="pure-u-1-2">
+                        <ul>
+                            <li><strong>Diverse Distribution:</strong> The map reveals a diverse distribution of homicide rates across different continents. Countries are color-coded based on their homicide rates, making it easier to identify regions with higher or lower incidents.</li>
+                            <li><strong>Hotspots:</strong> Certain regions, particularly in parts of <strong>Latin America</strong>, <strong>Africa</strong>, and some parts of <strong>Asia</strong>, display notably higher intentional homicide rates.</li>
+                            <li><strong>Stability in Developed Regions:</strong> Most developed countries, especially those in <strong>Europe</strong> and <strong>North America</strong>, exhibit lower intentional homicide rates.</li>
+                            <li><strong>Diverse Factors at Play:</strong> Economic disparities, governance quality, prevalence of organized crime, access to education, and cultural factors can all play a role in influencing homicide rates.</li>
+                            <li><strong>Need for Context:</strong> While the map offers valuable insights, it's crucial to interpret the data in context.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="pure-g custom-container">
+                    <!-- Bar Chart of Top 10 countries -->
+                    <div class="pure-u-1-2">
+                        <label for="topCountriesDropdown">Select Top N Countries:</label>
+                        <select id="topCountriesDropdown">
+                            <option value="5">Top 5</option>
+                            <option value="10">Top 10</option>
+                            <option value="15">Top 15</option>
+                            <option value="20">Top 20</option>
+                        </select>
+                        <div id="barChartTop10"></div>
+                    <!-- Analysis for the Bar Chart -->
+                        <p>
+                            The bar chart visualizes the top N countries with the highest intentional homicide rates in the latest year. El Salvador tops the list, indicating a pressing concern for its government and law enforcement agencies. The presence of multiple countries from Central and South America, such as Venezuela and Honduras, hints at regional challenges, possibly driven by factors like drug trafficking, political instability, and socio-economic disparities. Understanding the root causes for each country can aid in formulating targeted interventions.
+                        </p>
+                </div>
+
+                    <!-- Line Chart of Global Average -->
+                    <div class="pure-u-1-2"> 
+                        <div id="globalLineChart"></div>
+                
+                    <!-- Analysis for Line Chart -->
+                        <p>
+                            The line chart indicates the trend of the global average intentional homicide rate over the years. There's a fluctuation in the rate, with a noticeable increase around the early 2000s followed by a dip. This could be linked to global events, economic crises, or socio-political changes affecting the security situation globally. Correlating these trends with significant global events can provide a better understanding of the reasons behind the numbers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </section>
+                
+            <!-- Australia Specific Analysis Section -->
+            <div class="pure-u-1">
+            <section class="australia-analysis">
+                <h3>Australia-Specific Analysis</h3>
+                <p>As we zoom into the landscape of intentional homicides in Australia, a rich tapestry of data-driven stories emerges. Australia's journey, juxtaposed against its economic growth, paints a nuanced picture of societal progression, law enforcement efficacy, and the challenges that remain.</p>
+    
+                <div class="pure-g custom-container">
+                    <!-- Bubble Plot for GDP per Capita and Homicide Rates -->
+                    <div class="pure-u-1-2">     
+                        <div id="bubblePlot"></div>
+                        <h3>Correlation Between GDP and Homicide Rates</h3>
+                        <p>This intriguing bubble plot provides a snapshot of Australia's economic trajectory in tandem with its homicide rates. While the country's economic prosperity is evident, the chart showcases that economic growth isn't the sole influencer of crime. Numerous factors, from societal values to law enforcement strategies, shape this narrative.</p>
+                    </div>
+    
+                    <!-- Line Chart of Homicide Rate by States in Australia -->
+                    <div class="pure-u-1-2"> 
+                        <div id="ausLineChart"></div>
+                        <h3>State-wise Homicide Trends</h3>
+                        <p>State-wise data unveils a multifaceted view of intentional homicides across Australia. With each state carrying its unique challenges and stories, this chart elucidates the regions that have consistently maintained lower rates and those that need more attention. It's a testament to the localized challenges and successes within the broader national context.</p>
+                    </div>
+                </div>
+                
+                <div class="pure-g">
+                    <!-- Stacked Bar Chart for Intentional Homicide Rates by State -->
+                    <div class="pure-u-1-2"> 
+                        <div id="stackedBarChart"></div>
+                    </div>    
+
+                    <div class="pure-u-1-2">
+                        <h4>Detailed Breakdown by State</h4>
+                        <p>Delving deeper, this stacked bar chart offers a granular view of intentional homicide rates across different states. The ebb and flow of the data over the years provide insights into the effectiveness of state-specific interventions, policy changes, and socio-economic influences. Comparing states offers lessons that can be learned and replicated.</p>
+                    </div>
+                </section> 
+                </div>
+
+                <!-- Footer Section -->
+                <footer class="pure-u-1">
+                    <div class="footer-content">
+                        <p>&copy; 2023 Homicide Analysis. All Rights Reserved.</p>  
+                    </div>
+                </footer>
+
+        <script>
+            // Embed the Vega-Lite visualizations
+            vegaEmbed('#choropleth', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Choropleth%20Map.json');
+            vegaEmbed('#barChartTop10', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Bar%20Chart%20of%20top%2010%20countries%20by%20homicide%20rate%202.json');
+            vegaEmbed('#globalLineChart', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Line%20chart%20of%20global%20average%20intentional%20homicide%20rate%20over%20time.json');
+            vegaEmbed('#bubblePlot', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Bubble%20plot%20for%20GDP%20per%20Capita%20and%20Homicide%20Rates.json');
+            vegaEmbed('#ausLineChart', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Line%20chart%20of%20Homicide%20Rate%20by%20States%20in%20Australia%20over%20Time%202.json');
+            vegaEmbed('#stackedBarChart', 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Stacked%20bar%20chart%20for%20intentional%20homicide%20rates%20by%20state.json');
+        </script>
+    </body>
+        <script>
+            document.getElementById('topCountriesDropdown').addEventListener('change', function() {
+                let selectedN = parseInt(this.value, 10);
+                let specUrl = 'https://raw.githubusercontent.com/ianllow/FIT3179A2/main/Bar%20Chart%20of%20top%2010%20countries%20by%20homicide%20rate%202.json';
+                fetch(specUrl)
+                    .then(response => response.json())
+                    .then(spec => {
+                        // Modify the spec based on selectedN
+                        spec.data[1].transform[2].expr = `datum.rank <= ${selectedN}`;
+                    
+                        // Embed the updated visualization
+                        vegaEmbed('#barChartTop10', spec);
+                });
+        });
+    </script>
+    </html>
